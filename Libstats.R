@@ -1,4 +1,4 @@
-### Script provided by Pio
+###<Script provided by Pio, which was then manually checked and verified by me>
 
 #!/usr/bin/env Rscript
 
