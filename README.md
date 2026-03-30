@@ -63,7 +63,7 @@ cat Berg_prefixed.fa.stats.fail MCH_prefixed.fa.stats.fail Pantera_prefixed.fa.s
 
 # Map to clusters
 python3 passing_clusters.py all_pass.stats all_fail.stats Universal_prefixed_Clustered_80_80.fa.clstr
-# Output: clusters_with_pass.tsv and clusters_without_pass.tsv
+#Output: clusters_with_pass.tsv and clusters_without_pass.tsv
 
 
 # Step 4.2: Select one consensus per family
