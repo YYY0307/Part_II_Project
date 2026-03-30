@@ -23,7 +23,7 @@ cat Berg.fa Berg_Dmel.fa > FlyBase_combined.fa
 
 # Cluster FlyBase combined library using 80-80 rule
 cd-hit-est -i FlyBase_combined.fa -o FlyBase_Clustered_80_80 -c 0.8 -aS 0.8 -d 0
-# Output: FlyBase_Clustered_80_80.fa and FlyBase_Clustered_80_80.fa.clstr
+#Output: FlyBase_Clustered_80_80.fa and FlyBase_Clustered_80_80.fa.clstr
 
 # 1.2 Add prefixes to each library (to keep track of source)
 awk '/^>/ {print ">" "berg_" substr($0,2); next} {print}' Berg.fa > Berg_prefixed.fa
@@ -37,7 +37,7 @@ awk '/^>/ {print ">" "pepi_" substr($0,2); next} {print}' Pepi.fa > Pepi_prefixe
 cat Berg_prefixed.fa MCH_prefixed.fa Pantera_prefixed.fa Pepi_prefixed.fa > universal_prefixed.fa
 
 cd-hit-est -i universal_prefixed.fa -o Universal_prefixed_Clustered_80_80 -c 0.8 -aS 0.8 -d 0
-# Output: Universal_prefixed_Clustered_80_80.fa and .clstr
+#Output: Universal_prefixed_Clustered_80_80.fa and .clstr
 
 
 # Step 3: Filter for high-confidence TE entries
@@ -53,7 +53,7 @@ python3 Filter_libstats.py Berg_prefixed.fa.stats
 python3 Filter_libstats.py MCH_prefixed.fa.stats
 python3 Filter_libstats.py Pantera_prefixed.fa.stats
 python3 Filter_libstats.py Pepi_prefixed.fa.stats
-# Output example: Berg_prefixed.fa.stats.pass / Berg_prefixed.fa.stats.fail
+#Output example: Berg_prefixed.fa.stats.pass / Berg_prefixed.fa.stats.fail
 
 
 # Step 4: Map passed/failed entries back to clusters
