@@ -1,22 +1,22 @@
 # Part_II_Project
-# Submitted on 30/3/2026
-# Workflow for curating a universal TE library and extracting high-confidence consensuses
+#Submitted on 30/3/2026
+#Workflow for curating a universal TE library and extracting high-confidence consensuses
 
 # Notes:
-# - All commands are for Onix/macOS unless otherwise stated
-# - Ensure all required scripts (libstats.R, Filter_libstats.py, passing_clusters.py, split_clusters_by_source.py, full_TE_pipeline.sh, Generate_consensus.R) are in the working directory
-# - Tools: CD-HIT, R, Python3, TE-Aid, EMBOSS, RepeatMasker, MAFFT
+#All commands are for Onix/macOS unless otherwise stated
+#Ensure all required scripts (libstats.R, Filter_libstats.py, passing_clusters.py, split_clusters_by_source.py, full_TE_pipeline.sh, Generate_consensus.R) are in the working directory
+#Tools: CD-HIT, R, Python3, TE-Aid, EMBOSS, RepeatMasker, MAFFT
 
 
 # Step 1: Curate a universal library from the 4 source libraries
 
 
 # Source libraries
-# FlyBase: Berg.fa
-# FlyBase D. mel: Berg_Dmel.fa
-# MCH: MCH.fa
-# Pantera: Pantera.fa
-# Gonzalez: Pepi.fa
+#FlyBase: Berg.fa
+#FlyBase D. mel: Berg_Dmel.fa
+#MCH: MCH.fa
+#Pantera: Pantera.fa
+#Gonzalez: Pepi.fa
 
 # 1.1 Combine Berg and Berg_Dmel to assess redundancy
 cat Berg.fa Berg_Dmel.fa > FlyBase_combined.fa
@@ -39,9 +39,9 @@ cat Berg_prefixed.fa MCH_prefixed.fa Pantera_prefixed.fa Pepi_prefixed.fa > univ
 cd-hit-est -i universal_prefixed.fa -o Universal_prefixed_Clustered_80_80 -c 0.8 -aS 0.8 -d 0
 # Output: Universal_prefixed_Clustered_80_80.fa and .clstr
 
-# -----------------------------
+
 # Step 3: Filter for high-confidence TE entries
-# -----------------------------
+
 # Run libstats.R for each library to generate stats
 Rscript libstats.R Berg_prefixed.fa
 Rscript libstats.R MCH_prefixed.fa
@@ -70,14 +70,14 @@ python3 passing_clusters.py all_pass.stats all_fail.stats Universal_prefixed_Clu
 
 # Semi-automatic prioritization based on source and quality
 python3 split_clusters_by_source.py
-# Outputs:
-# 1) clusters_with_pass_mch_pantera_only.tsv 
-# 2) clusters_with_pass_pepi_berg_only.tsv
-# 3) clusters_with_pass_mixed.tsv
+#Outputs:
+#1) clusters_with_pass_mch_pantera_only.tsv 
+#2) clusters_with_pass_pepi_berg_only.tsv
+#3) clusters_with_pass_mixed.tsv
 
-# Post-processing:
-# - Discard fail / low-quality entries as described
-# - Keep only entries of interest
+#Post-processing:
+#- Discard fail / low-quality entries as described
+#- Keep only entries of interest
 
 # Merge all retained clusters
 cat clusters_with_pass_mch_pantera_only.tsv clusters_with_pass_pepi_berg_only.tsv clusters_with_pass_mixed.tsv > universal_passed_entries.tsv
@@ -91,7 +91,7 @@ cut -f2 universal_passed_entries.tsv > passed_names.txt
 # Step 4.4: Filter universal FASTA library using conserved FASTA names
 awk 'BEGIN{while(getline<"passed_names.txt") names[$1]=1} 
 /^>/{f=names[substr($0,2)]} f{print}' universal.fa > universal_passed.fa
-# Output: universal_passed.fa (final high-confidence universal TE library)
+#Output: universal_passed.fa (final high-confidence universal TE library)
 
 # Step 5: Masking against the genome
 RepeatMasker -pa 8 -lib universal_passed.fa -dir RM_output Dame_genome.fa
